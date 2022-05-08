@@ -36,6 +36,14 @@ void Controller::move_to_pos(float goal_point) {
     trajectory_done_ = false;
 }
 
+
+void Controller::move_to_pos_sin(float goal_point) {
+    axis_->sin_traj_.planSinusoidal(goal_point, pos_setpoint_, axis_->trap_traj_.config_.Tf);
+    axis_->sin_traj_.t_ = 0.0f;
+    trajectory_done_ = false;
+}
+
+
 void Controller::move_incremental(float displacement, bool from_input_pos = true){
     if(from_input_pos){
         input_pos_ += displacement;
@@ -222,6 +230,43 @@ bool Controller::update() {
             }
             anticogging_pos_estimate = pos_setpoint_; // FF the position setpoint instead of the pos_estimate
         } break;
+        case INPUT_MODE_TUNING: {
+            autotuning_phase_ = wrap_pm_pi(autotuning_phase_ + (2.0f * M_PI * autotuning_.frequency * current_meas_period));
+            float c = our_arm_cos_f32(autotuning_phase_);
+            float s = our_arm_sin_f32(autotuning_phase_);
+            pos_setpoint_ = autotuning_.pos_amplitude * s; // + pos_amp_c * c
+            vel_setpoint_ = autotuning_.vel_amplitude * c;
+            torque_setpoint_ = autotuning_.torque_amplitude * -s;
+        } break;
+
+
+        case INPUT_MODE_SIN_TRAJ: {
+            if(input_pos_updated_){
+                move_to_pos_sin(input_pos_);
+                input_pos_updated_ = false;
+            }
+            // Avoid updating uninitialized trajectory
+            if (trajectory_done_)
+                break;
+            
+            if (axis_->sin_traj_.t_ > axis_->sin_traj_.Tf_) {
+                // Drop into position control mode when done to avoid problems on loop counter delta overflow
+                config_.control_mode = CONTROL_MODE_POSITION_CONTROL;
+                pos_setpoint_ = axis_->sin_traj_.Xf_;
+                vel_setpoint_ = 0.0f;
+                torque_setpoint_ = 0.0f;
+                trajectory_done_ = true;
+            } else {
+                SinusoidalTrajectory::Step_t traj_step = axis_->sin_traj_.eval(axis_->sin_traj_.t_);
+                pos_setpoint_ = traj_step.Y;
+                vel_setpoint_ = traj_step.Yd;
+                torque_setpoint_ = traj_step.Ydd * config_.inertia;
+                axis_->sin_traj_.t_ += current_meas_period;
+            }
+            anticogging_pos_estimate = pos_setpoint_; // FF the position setpoint instead of the pos_estimate
+        } break;
+
+
         case INPUT_MODE_TUNING: {
             autotuning_phase_ = wrap_pm_pi(autotuning_phase_ + (2.0f * M_PI * autotuning_.frequency * current_meas_period));
             float c = our_arm_cos_f32(autotuning_phase_);

@@ -92,6 +92,7 @@ static bool config_read_all() {
                   config_manager.read(&axes[i].sensorless_estimator_.config_) &&
                   config_manager.read(&axes[i].controller_.config_) &&
                   config_manager.read(&axes[i].trap_traj_.config_) &&
+                  config_manager.read(&axes[i].sin_traj_.config_) &&
                   config_manager.read(&axes[i].min_endstop_.config_) &&
                   config_manager.read(&axes[i].max_endstop_.config_) &&
                   config_manager.read(&axes[i].mechanical_brake_.config_) &&
@@ -112,6 +113,7 @@ static bool config_write_all() {
                   config_manager.write(&axes[i].sensorless_estimator_.config_) &&
                   config_manager.write(&axes[i].controller_.config_) &&
                   config_manager.write(&axes[i].trap_traj_.config_) &&
+                  config_manager.write(&axes[i].sin_traj_.config_) &&
                   config_manager.write(&axes[i].min_endstop_.config_) &&
                   config_manager.write(&axes[i].max_endstop_.config_) &&
                   config_manager.write(&axes[i].mechanical_brake_.config_) &&
@@ -132,6 +134,7 @@ static void config_clear_all() {
         axes[i].controller_.config_ = {};
         axes[i].controller_.config_.load_encoder_axis = i;
         axes[i].trap_traj_.config_ = {};
+        axes[i].sin_traj_.config_ = {};
         axes[i].min_endstop_.config_ = {};
         axes[i].max_endstop_.config_ = {};
         axes[i].mechanical_brake_.config_ = {};

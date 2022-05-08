@@ -9,6 +9,7 @@ class Axis;
 #include "controller.hpp"
 #include "open_loop_controller.hpp"
 #include "trapTraj.hpp"
+#include "sinTraj.hpp"
 #include "endstop.hpp"
 #include "mechanical_brake.hpp"
 #include "low_level.h"
@@ -112,6 +113,7 @@ public:
             Controller& controller,
             Motor& motor,
             TrapezoidalTrajectory& trap,
+            SinusoidalTrajectory& sin,
             Endstop& min_endstop,
             Endstop& max_endstop,
             MechanicalBrake& mechanical_brake);
@@ -164,6 +166,7 @@ public:
     OpenLoopController open_loop_controller_;
     Motor& motor_;
     TrapezoidalTrajectory& trap_traj_;
+    SinusoidalTrajectory& sin_traj_;
     Endstop& min_endstop_;
     Endstop& max_endstop_;
     MechanicalBrake& mechanical_brake_;

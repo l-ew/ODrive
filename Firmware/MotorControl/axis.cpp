@@ -16,6 +16,7 @@ Axis::Axis(int axis_num,
            Controller& controller,
            Motor& motor,
            TrapezoidalTrajectory& trap,
+           SinusoidalTrajectory& sin,
            Endstop& min_endstop,
            Endstop& max_endstop,
            MechanicalBrake& mechanical_brake)
@@ -28,6 +29,7 @@ Axis::Axis(int axis_num,
       controller_(controller),
       motor_(motor),
       trap_traj_(trap),
+      sin_traj_(sin),
       min_endstop_(min_endstop),
       max_endstop_(max_endstop),
       mechanical_brake_(mechanical_brake)
@@ -37,6 +39,7 @@ Axis::Axis(int axis_num,
     controller_.axis_ = this;
     motor_.axis_ = this;
     trap_traj_.axis_ = this;
+    sin_traj_.axis_ = this;
     min_endstop_.axis_ = this;
     max_endstop_.axis_ = this;
     mechanical_brake_.axis_ = this;
