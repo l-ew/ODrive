@@ -1381,6 +1381,14 @@ interfaces:
           accel_limit: {type: float32, unit: turn/s^2}
           decel_limit: {type: float32, unit: turn/s^2}
 
+  ODrive.SinusoidalTrajectory:
+    c_is_class: True
+    attributes:
+      config:
+        c_is_class: False
+        attributes:
+          Tf: {type: float32, unit: s}
+
   ODrive.Endstop:
     c_is_class: True
     attributes:
