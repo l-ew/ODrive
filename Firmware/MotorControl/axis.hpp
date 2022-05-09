@@ -113,7 +113,7 @@ public:
             Controller& controller,
             Motor& motor,
             TrapezoidalTrajectory& trap,
-            SinusoidalTrajectory& sin,
+            SinusoidalTrajectory& scurve,
             Endstop& min_endstop,
             Endstop& max_endstop,
             MechanicalBrake& mechanical_brake);
