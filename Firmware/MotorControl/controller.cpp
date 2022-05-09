@@ -38,7 +38,7 @@ void Controller::move_to_pos(float goal_point) {
 
 
 void Controller::move_to_pos_sin(float goal_point) {
-    axis_->sin_traj_.planSinusoidal(goal_point, pos_setpoint_, axis_->trap_traj_.config_.Tf);
+    axis_->sin_traj_.planSinusoidal(goal_point, pos_setpoint_, axis_->sin_traj_.config_.Tf);
     axis_->sin_traj_.t_ = 0.0f;
     trajectory_done_ = false;
 }
