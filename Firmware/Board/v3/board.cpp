@@ -119,6 +119,7 @@ MechanicalBrake mechanical_brakes[AXIS_COUNT];
 SensorlessEstimator sensorless_estimators[AXIS_COUNT];
 Controller controllers[AXIS_COUNT];
 TrapezoidalTrajectory trap[AXIS_COUNT];
+SinusoidalTrajectory sin[AXIS_COUNT];
 
 std::array<Axis, AXIS_COUNT> axes{{
     {
@@ -149,6 +150,7 @@ std::array<Axis, AXIS_COUNT> axes{{
         controllers[1], // controller
         motors[1], // motor
         trap[1], // trap
+        sin[1], // trap
         endstops[2], endstops[3], // min_endstop, max_endstop
         mechanical_brakes[1], // mechanical brake
     },
