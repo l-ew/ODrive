@@ -19,6 +19,7 @@ private:
     void cmd_set_velocity(char * pStr, bool use_checksum);
     void cmd_set_torque(char * pStr, bool use_checksum);
     void cmd_set_trapezoid_trajectory(char * pStr, bool use_checksum);
+    void cmd_set_sinusoidal_trajectory(char * pStr, bool use_checksum);
     void cmd_get_feedback(char * pStr, bool use_checksum);
     void cmd_help(char * pStr, bool use_checksum);
     void cmd_info_dump(char * pStr, bool use_checksum);
