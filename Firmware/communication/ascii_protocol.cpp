@@ -114,6 +114,7 @@ void AsciiProtocol::process_line(cbufptr_t buffer) {
         case 'v': cmd_set_velocity(cmd, use_checksum);                break;  // velocity control
         case 'c': cmd_set_torque(cmd, use_checksum);                  break;  // current control
         case 't': cmd_set_trapezoid_trajectory(cmd, use_checksum);    break;  // trapezoidal trajectory
+        case 'x': cmd_set_sinusoidal_trajectory(cmd, use_checksum);   break;  // sinusoidal trajectory
         case 'f': cmd_get_feedback(cmd, use_checksum);                break;  // feedback
         case 'h': cmd_help(cmd, use_checksum);                        break;  // Help
         case 'i': cmd_info_dump(cmd, use_checksum);                   break;  // Dump device info
