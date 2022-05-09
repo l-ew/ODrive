@@ -8,7 +8,7 @@ bool SinusoidalTrajectory::planSinusoidal(float Xf, float Xi, float Tf) {
     Xi_ = Xi;
     Xf_ = Xf;
     Tf_ = Tf;
-    max_vel_ = 2.0f * (Xf - Xi) / Tf
+    max_vel_ = 2.0f * (Xf - Xi) / Tf;
     omega_ = 2.0f * M_PI / Tf;
 
     return true;
