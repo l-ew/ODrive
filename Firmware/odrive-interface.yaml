@@ -538,6 +538,7 @@ interfaces:
       acim_estimator: AcimEstimator
       sensorless_estimator: SensorlessEstimator
       trap_traj: TrapezoidalTrajectory
+      sin_traj: SinusoidalTrajectory
       min_endstop: Endstop
       max_endstop: Endstop
       mechanical_brake: MechanicalBrake
@@ -1662,6 +1663,20 @@ valuetypes:
           * `Axis:trap_traj.config.vel_limit`
           * `Axis:trap_traj.config.accel_limit`
           * `Axis:trap_traj.config.decel_limit`
+          * `config.inertia`
+
+          ### Valid Inputs:
+          * `input_pos`
+
+          ### Valid Control Modes:
+          * `CONTROL_MODE_POSITION_CONTROL`
+      SIN_TRAJ:
+        brief: Implementes an online sinusoidal trajectory planner.
+        doc: |
+          ![Sinusoidal Planner Response](../TrapTrajPosVel.PNG)
+
+          ### Configuration Values:
+          * `Axis:sin_traj.config.Tf`
           * `config.inertia`
 
           ### Valid Inputs:
