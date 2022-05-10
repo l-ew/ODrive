@@ -277,7 +277,7 @@ void AsciiProtocol::cmd_set_sinusoidal_trajectory(char* pStr, bool use_checksum)
     unsigned motor_number;
     float goal_point;
 
-    if (sscanf(pStr, "t %u %f", &motor_number, &goal_point) < 2) {
+    if (sscanf(pStr, "x %u %f", &motor_number, &goal_point) < 2) {
         respond(use_checksum, "invalid command format");
     } else if (motor_number >= AXIS_COUNT) {
         respond(use_checksum, "invalid motor %u", motor_number);
