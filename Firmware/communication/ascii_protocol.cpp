@@ -113,8 +113,8 @@ void AsciiProtocol::process_line(cbufptr_t buffer) {
         case 'q': cmd_set_position_wl(cmd, use_checksum);             break;  // position control with limits
         case 'v': cmd_set_velocity(cmd, use_checksum);                break;  // velocity control
         case 'c': cmd_set_torque(cmd, use_checksum);                  break;  // current control
-        case 't': cmd_set_trapezoid_trajectory(cmd, use_checksum);    break;  // trapezoidal trajectory
-        case 'x': cmd_set_sinusoidal_trajectory(cmd, use_checksum);   break;  // sinusoidal trajectory
+        // case 't': cmd_set_trapezoid_trajectory(cmd, use_checksum);    break;  // trapezoidal trajectory
+        case 't': cmd_set_sinusoidal_trajectory(cmd, use_checksum);   break;  // sinusoidal trajectory
         case 'f': cmd_get_feedback(cmd, use_checksum);                break;  // feedback
         case 'h': cmd_help(cmd, use_checksum);                        break;  // Help
         case 'i': cmd_info_dump(cmd, use_checksum);                   break;  // Dump device info
@@ -251,23 +251,23 @@ void AsciiProtocol::cmd_encoder(char * pStr, bool use_checksum) {
 // @param pStr buffer of ASCII encoded values
 // @param response_channel reference to the stream to respond on
 // @param use_checksum bool to indicate whether a checksum is required on response
-void AsciiProtocol::cmd_set_trapezoid_trajectory(char* pStr, bool use_checksum) {
-    unsigned motor_number;
-    float goal_point;
+// void AsciiProtocol::cmd_set_trapezoid_trajectory(char* pStr, bool use_checksum) {
+//     unsigned motor_number;
+//     float goal_point;
 
-    if (sscanf(pStr, "t %u %f", &motor_number, &goal_point) < 2) {
-        respond(use_checksum, "invalid command format");
-    } else if (motor_number >= AXIS_COUNT) {
-        respond(use_checksum, "invalid motor %u", motor_number);
-    } else {
-        Axis& axis = axes[motor_number];
-        axis.controller_.config_.input_mode = Controller::INPUT_MODE_TRAP_TRAJ;
-        axis.controller_.config_.control_mode = Controller::CONTROL_MODE_POSITION_CONTROL;
-        axis.controller_.input_pos_ = goal_point;
-        axis.controller_.input_pos_updated();
-        axis.watchdog_feed();
-    }
-}
+//     if (sscanf(pStr, "t %u %f", &motor_number, &goal_point) < 2) {
+//         respond(use_checksum, "invalid command format");
+//     } else if (motor_number >= AXIS_COUNT) {
+//         respond(use_checksum, "invalid motor %u", motor_number);
+//     } else {
+//         Axis& axis = axes[motor_number];
+//         axis.controller_.config_.input_mode = Controller::INPUT_MODE_TRAP_TRAJ;
+//         axis.controller_.config_.control_mode = Controller::CONTROL_MODE_POSITION_CONTROL;
+//         axis.controller_.input_pos_ = goal_point;
+//         axis.controller_.input_pos_updated();
+//         axis.watchdog_feed();
+//     }
+// }
 
 // @brief Executes the set sinusoidal trajectory command
 // @param pStr buffer of ASCII encoded values
@@ -277,7 +277,7 @@ void AsciiProtocol::cmd_set_sinusoidal_trajectory(char* pStr, bool use_checksum)
     unsigned motor_number;
     float goal_point;
 
-    if (sscanf(pStr, "x %u %f", &motor_number, &goal_point) < 2) {
+    if (sscanf(pStr, "t %u %f", &motor_number, &goal_point) < 2) {
         respond(use_checksum, "invalid command format");
     } else if (motor_number >= AXIS_COUNT) {
         respond(use_checksum, "invalid motor %u", motor_number);
